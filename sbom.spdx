@@ -1,0 +1,23 @@
+SPDXVersion: SPDX-2.3
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: SOMA-Production-SBOM
+DocumentNamespace: https://spdx.org/spdxdocs/SOMA-ec7c217e-2d77-49d6-9850-45464c9f9e77
+Creator: Person: Juraj Buno
+Created: 2026-09-13T15:37:30Z
+CreatorComment: This SBOM describes the production dependency composition of the SOMA Framework source distribution.
+DocumentComment: GoogleTest is a test-only dependency and is intentionally excluded. The detailed FreeRTOS component inventory is retained in the referenced upstream SPDX document.
+
+ExternalDocumentRef: DocumentRef-FreeRTOS https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/v10.6.2/sbom.spdx SHA1: f61fd6a15ee8633ea7dae2032b23285ca7bf8259
+
+PackageName: SOMA Framework
+SPDXID: SPDXRef-Package-SOMA
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageLicenseConcluded: MIT
+PackageLicenseDeclared: MIT
+PackageCopyrightText: NOASSERTION
+PrimaryPackagePurpose: LIBRARY
+
+Relationship: SPDXRef-DOCUMENT DESCRIBES SPDXRef-Package-SOMA
+Relationship: SPDXRef-Package-SOMA DEPENDS_ON DocumentRef-FreeRTOS:SPDXRef-Package-FreeRTOS-Kernel

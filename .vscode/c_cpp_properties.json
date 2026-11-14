@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "GCC-WIN",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe"
+        }
+    ],
+    "version": 4
+}

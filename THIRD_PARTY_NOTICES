@@ -1,0 +1,25 @@
+# Third-Party Notices
+
+The MIT License in the repository root applies only to original SOMA code.
+The third-party components listed below remain subject to their own licenses
+and copyright notices. Their source files and license texts must be retained
+when redistributing this repository or derived binaries.
+
+## FreeRTOS Kernel
+
+- Version: v10.6.2
+- License: MIT
+- Location: `third_party/FreeRTOS`
+- Full license text: `third_party/FreeRTOS/LICENSE.md`
+- Metadata: `third_party/FreeRTOS/manifest.yml`
+
+The FreeRTOS tree also contains optional third-party ports under
+`third_party/FreeRTOS/portable/ThirdParty`. Any license files shipped in those
+directories apply to their respective files and must remain intact.
+
+## GoogleTest
+
+- Version: 1.15.2
+- License: BSD 3-Clause
+- Location: `tools/googletest`
+- Full license text: `tools/googletest/LICENSE`

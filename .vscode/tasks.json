@@ -1,0 +1,66 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // UNIT TEST build tasks
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        {
+            "label": "tests clean",
+            "type": "shell",
+            "group": "build",
+            "command": "rm -rf build",
+            "windows": {
+                "options": {
+                    "shell": {
+                        "executable": "cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                },
+                "command": "if exist build (rmdir /s /q build) else (exit 0)"
+            },
+            "hide": true
+        },
+        {
+            "label": "tests configure",
+            "type": "shell",
+            "group": "build",
+            "command": "cmake",
+            "args": [
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-B",
+                "${cwd}/build/test",
+                "-S",
+                "${cwd}",
+            ],
+            "options": {
+                "env": {
+                    "CC": "C:/msys64/ucrt64/bin/gcc.exe",
+                    "CXX": "C:/msys64/ucrt64/bin/g++.exe",
+                }
+            },
+            "hide": true
+        },
+        {
+            "label": "tests build",
+            "type": "shell",
+            "group": "build",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${cwd}/build/test",
+            ],
+        },
+        {
+            "label": "tests rebuild",
+            "group": "build",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "tests clean",
+                "tests configure",
+                "tests build"
+            ]
+        },
+    ]
+}
