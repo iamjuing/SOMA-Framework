@@ -8,6 +8,7 @@
 #include "soma/runtime/task_event.h"
 #include "soma/io/i_output_stream.h"
 #include "soma/runtime/task_memory.h"
+#include "soma/time.h"
 
 using namespace SOMA;
 
@@ -323,4 +324,49 @@ TEST( event_task, timer_periodic )
     ASSERT_EQ_IN_TIME( end_condition_reached,
                        true,
                        5000 );
+}
+
+TEST( event_task, periodic_timer_uses_requested_period )
+{
+    constexpr uint32_t period_ms = 25u;
+    constexpr unsigned int callback_count_to_measure = 40u;
+
+    Task_memory<1000> m_task_storage;
+    NiceMock<Mock_test_class> mock_test_class( "test_task", Task::Priority_e::high, m_task_storage );
+
+    mock_test_class.start();
+
+    std::atomic_bool end_condition_reached = false;
+    uint32_t first_callback_ms = 0u;
+    uint32_t last_callback_ms = 0u;
+    unsigned int callback_count = 0u;
+
+    EXPECT_CALL( mock_test_class, on_start_timers() )
+        .WillOnce( Invoke( [&]() {
+            mock_test_class.m_timer_1.start_periodic( period_ms );
+        } ) );
+
+    EXPECT_CALL( mock_test_class, callback_timer_1() )
+        .WillRepeatedly( Invoke( [&]() {
+            ++callback_count;
+
+            if( callback_count == 1u )
+            {
+                first_callback_ms = Time::uptime_ms();
+            }
+            else if( callback_count == callback_count_to_measure + 1u )
+            {
+                last_callback_ms = Time::uptime_ms();
+                end_condition_reached = true;
+            }
+        } ) );
+
+    ASSERT_EQ_IN_TIME( mock_test_class.is_started(), true, 5000 );
+    mock_test_class.m_start_timers_signal.notify();
+
+    ASSERT_EQ_IN_TIME( end_condition_reached, true, 5000 );
+
+    const uint32_t elapsed_ms = last_callback_ms - first_callback_ms;
+    const uint32_t expected_elapsed_ms = period_ms * callback_count_to_measure;
+    EXPECT_LE( elapsed_ms, expected_elapsed_ms + 20u );
 }
