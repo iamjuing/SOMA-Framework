@@ -54,7 +54,7 @@ namespace SOMA
 
         const TickType_t period_ticks = Internal::milliseconds_to_ticks( period_ms );
 
-        const TickType_t guarded_period_ticks = period_ticks + 1u;
+        const TickType_t guarded_period_ticks = period_ticks;
         const TickType_t deadline_ticks = Internal::tick_count() + guarded_period_ticks;
 
         m_period_ticks = static_cast<Tick_t>( guarded_period_ticks );
