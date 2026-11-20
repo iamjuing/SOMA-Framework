@@ -1,9 +1,18 @@
 {
     "configurations": [
         {
-            "name": "GCC-WIN",
-            "intelliSenseMode": "gcc-x64",
-            "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe"
+            "name": "example (Windows)",
+            "intelliSenseMode": "windows-gcc-x64",
+            "compilerPath": "g++",
+            "cppStandard": "c++17",
+            "compileCommands": "${workspaceFolder}/build/example/windows/compile_commands.json"
+        },
+        {
+            "name": "tests (Windows)",
+            "intelliSenseMode": "windows-gcc-x64",
+            "compilerPath": "g++",
+            "cppStandard": "c++17",
+            "compileCommands": "${workspaceFolder}/build/test/compile_commands.json"
         }
     ],
     "version": 4
