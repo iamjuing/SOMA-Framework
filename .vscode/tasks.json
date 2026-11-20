@@ -2,10 +2,31 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "exampleCppConfig",
+            "type": "command",
+            "command": "cpptools.setActiveConfigName",
+            "args": "example (Windows)"
+        },
+        {
+            "id": "testsCppConfig",
+            "type": "command",
+            "command": "cpptools.setActiveConfigName",
+            "args": "tests (Windows)"
+        }
+    ],
     "tasks": [
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // UNIT TEST build tasks
+        // UNIT TESTS
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        {
+            "label": "tests cpp configuration",
+            "type": "shell",
+            "command": "echo ${input:testsCppConfig} >NUL",
+            "hide": true,
+            "problemMatcher": []
+        },
         {
             "label": "tests clean",
             "type": "shell",
@@ -15,7 +36,10 @@
                 "options": {
                     "shell": {
                         "executable": "cmd.exe",
-                        "args": ["/d", "/c"]
+                        "args": [
+                            "/d",
+                            "/c"
+                        ]
                     }
                 },
                 "command": "if exist build (rmdir /s /q build) else (exit 0)"
@@ -46,6 +70,9 @@
             "label": "tests build",
             "type": "shell",
             "group": "build",
+            "dependsOn": [
+                "tests cpp configuration"
+            ],
             "command": "cmake",
             "args": [
                 "--build",
@@ -60,6 +87,91 @@
                 "tests clean",
                 "tests configure",
                 "tests build"
+            ]
+        },
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // EXAMPLE (Windows)
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        {
+            "label": "example cpp configuration",
+            "type": "shell",
+            "command": "echo ${input:exampleCppConfig} >NUL",
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "example configure (Windows)",
+            "type": "process",
+            "command": "cmake",
+            "args": [
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-S",
+                ".",
+                "-B",
+                "${workspaceFolder}/build/example/windows",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/example/platform/windows",
+                "env": {
+                    "CC": "C:/msys64/ucrt64/bin/gcc.exe",
+                    "CXX": "C:/msys64/ucrt64/bin/g++.exe",
+                }
+            },
+            "problemMatcher": [],
+            "hide": true
+        },
+        {
+            "label": "example build (Windows)",
+            "type": "process",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build/example/windows",
+                "--target",
+                "soma_example"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/example/platform/windows"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "example cpp configuration",
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "example clean (Windows)",
+            "type": "shell",
+            "group": "build",
+            "command": "rm -rf build/example/windows",
+            "options": {
+                "c1wd": "${workspaceFolder}"
+            },
+            "windows": {
+                "options": {
+                    "shell": {
+                        "executable": "cmd.exe",
+                        "args": [
+                            "/d",
+                            "/c"
+                        ]
+                    }
+                },
+                "command": "if exist build\\example\\windows (rmdir /s /q build\\example\\windows) else (exit 0)"
+            },
+            "hide": true
+        },
+        {
+            "label": "example rebuild (Windows)",
+            "group": "build",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "example clean (Windows)",
+                "example configure (Windows)",
+                "example build (Windows)"
             ]
         },
     ]

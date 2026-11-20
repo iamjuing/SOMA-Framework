@@ -23,7 +23,6 @@
     },
     "C_Cpp.errorSquiggles": "enabled",
     "C_Cpp.autoAddFileAssociations": false,
-    "C_Cpp.default.compileCommands": "${workspaceFolder}/build/tests/compile_commands.json",
 
     "cmake.configureOnOpen": false,
 
