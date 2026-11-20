@@ -18,19 +18,22 @@ Simply, model a sensor, controller, or communication service as an active compon
 
 ## Motivation
 
-- **abandon C language and usual OOP simulation patterns**
-- **eliminate pointers as musch as possible (references, iterators, containers - Array, Buffer, String/String_view etc.)**
+- **object oriented design**
+- **streamline firmware architecture**
+- **abandon C language and common OOP simulation patterns**
+- **eliminate pointers as much as possible (references, iterators, data views - Array, Buffer_view, String_view etc.)**
 - **increase memory safety**
 - **eliminate common multi-threading issues**
-- **streamline firmware architecture**
-- **focusing on business logic w/o keeping concurency and synchronization in mind**
+- **more focus on business logic**
 - **binding independent and re-usable components at construction time**
-- **type safe logging**
-- **improve scalability, re-usability**
-- **long term and safer suistainability, extensibility and portability**
-- **support multiple independent applications in a single firmware image that can switch at run-time**
-- **automatic task live monitoring**
+- **typesafe logging**
+- **improve scalability and re-usability**
+- **long term suistainability, extensibility and portability**
+- **multi-application firmware image with run-time switching capability**
+- **automatic task monitoring (for WDT)**
+- **no STD dependency or knowledge required**
 
+yy
 ## Features
 - typesafe containers and memory views
 - typesafe, in-memory logging using streaming operators (working in ISR for debug purposes)
