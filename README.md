@@ -29,11 +29,10 @@ Simply, model a sensor, controller, or communication service as an active compon
 - **typesafe logging**
 - **improve scalability and re-usability**
 - **long term suistainability, extensibility and portability**
-- **multi-application firmware image with run-time switching capability**
+- **multi-application firmware image with run-time switching capability (w/o using heap)**
 - **automatic task monitoring (for WDT)**
 - **no STD dependency or knowledge required**
 
-yy
 ## Features
 - typesafe containers and memory views
 - typesafe, in-memory logging using streaming operators (working in ISR for debug purposes)
